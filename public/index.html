@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Secure Chat</title>
+<style>body{font-family:sans-serif;max-width:480px;margin:20px auto}input{padding:6px;margin:2px}#log{border:1px solid #ccc;height:240px;overflow:auto;padding:6px;margin:8px 0}</style></head>
+<body>
+<h3>Secure Chat</h3>
+<div><input id="u" placeholder="username"><input id="p" type="password" placeholder="password">
+<button onclick="auth('signup')">Sign up</button><button onclick="auth('login')">Login</button></div>
+<div id="log"></div>
+<input id="m" placeholder="message" style="width:70%"><button onclick="send()">Send</button>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+let socket;
+const log=t=>{const d=document.getElementById('log');d.innerHTML+=t+'<br>';d.scrollTop=d.scrollHeight};
+async function auth(kind){
+  const r=await fetch('/api/'+kind,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username:u.value,password:p.value})});
+  const d=await r.json();
+  if(!r.ok) return log('Error: '+d.error);
+  if(kind==='signup') return log('Signed up. Now login.');
+  log('Logged in.');
+  socket=io({auth:{token:d.token}});
+  socket.on('chat:message',m=>log('<b>'+m.from+'</b>: '+m.text));
+  socket.on('system',t=>log('<i>'+t+'</i>'));
+  socket.on('connect_error',e=>log('Socket error: '+e.message));
+}
+function send(){if(socket&&m.value){socket.emit('chat:message',m.value);m.value=''}}
+</script></body></html>
