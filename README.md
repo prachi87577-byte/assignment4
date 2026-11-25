@@ -10,11 +10,11 @@ Chat: open http://localhost:3000 in two tabs
 
 ## Expected Output
 
-![Fig 1](images/fig1-signup.png)
+![Fig 1]![alt text](image-1.png)
 *Fig 1. Signup response (201 Created)*
 
-![Fig 2](images/fig2-login.png)
+![Fig 2]![alt text](image.png)
 *Fig 2. Login response with JWT token (200 OK)*
 
-![Fig 3](images/fig3-notes-with-token.png)
+![Fig 3]![alt text](image-2.png)
 *Fig 3. Notes API accessible with a valid JWT (200 OK)*
