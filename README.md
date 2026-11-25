@@ -18,3 +18,4 @@ Chat: open http://localhost:3000 in two tabs
 
 ![Fig 3]![alt text](image-2.png)
 *Fig 3. Notes API accessible with a valid JWT (200 OK)*
+![fig4](<Screenshot (68).png>)
